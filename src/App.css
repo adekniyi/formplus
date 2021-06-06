@@ -12,7 +12,7 @@
   /* width:82em; */
   margin: 0 auto;
   overflow: hidden;
-  margin-bottom: 30px;
+  margin-bottom:30px
 }
 .card {
   display: grid;
@@ -161,6 +161,14 @@
   width : 80%;
   margin : auto;
   text-align : center;
+  font-weight: 500;
+font-size: 18px;
+line-height: 23px;
+margin-bottom:20px;
+}
+.flex-space-btw span{
+  border: 2px solid #3F3F3F;
+  padding:4px;
 }
 .pagination {
   display: flex;
