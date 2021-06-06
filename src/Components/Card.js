@@ -6,11 +6,11 @@ import Filter from './filter'
 export default function Card() {
   const [sections, setSections] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(100);
+  const [postsPerPage, setPostsPerPage] = useState(10);
   const [filterData, setFilter] = useState([]);
 
   useEffect(() => {
-    setFilter(sections);
+    setFilter(sections.slice(0, postsPerPage));
   }, [sections]);
 
   const proxy = 'https://lit-caverns-50090.herokuapp.com/';
@@ -94,8 +94,9 @@ export default function Card() {
         </p>
       </div>
       <div className='card'>
-        {currentPosts?.map(({ category, description, created }) => (
+        {filterData?.map(({ category, description, created }, index) => (
           <CardItem
+          index={index}
             key={created}
             created={created}
             category={category}
@@ -103,7 +104,7 @@ export default function Card() {
           />
         ))}
       </div>
-      <Pagination postsPerPage={postsPerPage} totalPosts={filterData.length} paginate={paginate}/>
+      <Pagination page={setCurrentPage} data={sections} currentPage={currentPage} postsPerPage={postsPerPage} action={setFilter} totalPosts={filterData.length} paginate={paginate}/>
     </>
   );
 }

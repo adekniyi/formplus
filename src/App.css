@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 :root {
-  --primaryColor : green;
+  --primaryColor: green;
 }
 
 .container {
@@ -12,7 +12,7 @@
   /* width:82em; */
   margin: 0 auto;
   overflow: hidden;
-  margin-bottom:30px
+  margin-bottom: 30px;
 }
 .card {
   display: grid;
@@ -155,6 +155,13 @@
   color: #252525;
 }
 
+.flex-space-btw {
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr );
+  width : 80%;
+  margin : auto;
+  text-align : center;
+}
 .pagination {
   display: flex;
   padding-left: 0;
@@ -183,8 +190,7 @@
   border: 1px solid #dee2e6;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-} 
-
+}
 
 @media screen and (max-width: 1300px) {
   .container {
@@ -242,25 +248,24 @@
   }
 }
 
-@media screen and (max-width: 975px){
+@media screen and (max-width: 975px) {
   .page-link {
     padding: 0.05rem 0.1rem;
   }
 }
 
-@media screen and (max-width: 850px){
+@media screen and (max-width: 850px) {
   .page-link {
     padding: 0.01rem 0.02rem;
   }
 }
 
-@media screen and (max-width: 740px){
+@media screen and (max-width: 740px) {
   .page-link {
-    padding: 0.0005rem 0.0010rem;
+    padding: 0.0005rem 0.001rem;
     font-size: 14px;
   }
 }
-
 
 @media screen and (max-width: 700px) {
   .card {
@@ -298,4 +303,3 @@
     font-size: 10px;
   }
 } */
-
