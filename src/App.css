@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+:root {
+  --primaryColor : green;
+}
 
 .container {
   width: 90%;
@@ -155,9 +158,10 @@
 .pagination {
   display: flex;
   padding-left: 0;
+  flex-wrap: wrap;
   list-style: none;
   justify-content: center;
-  width: 100%;
+  width: 98%;
   list-style-position: initial;
   list-style-image: initial;
   list-style-type: none;
@@ -179,7 +183,8 @@
   border: 1px solid #dee2e6;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+} 
+
 
 @media screen and (max-width: 1300px) {
   .container {
@@ -280,7 +285,7 @@
   }
 }
 
-@media screen and (max-width: 640px){
+/* @media screen and (max-width: 640px){
   .page-link {
     padding: 0.0005rem 0.0010rem;
     font-size: 12px;
@@ -292,5 +297,5 @@
     padding: 0.0001rem 0.0002rem;
     font-size: 10px;
   }
-}
+} */
 

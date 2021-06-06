@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import CardItem from './CardItem';
 import Pagination from './Pagination';
+import Filter from './filter'
 
 export default function Card() {
   const [sections, setSections] = useState([]);
-  //const [getValue, setGetValue] = useState("")
-  const [currentPage,setCurrentPage] = useState(1);
-  const [postsPerPage,setPostsPerPage] = useState(50);
-  const [filter, setFilter] = useState([]);
-  // const [filter, setFilter] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(100);
+  const [filterData, setFilter] = useState([]);
 
   useEffect(() => {
     setFilter(sections);
@@ -22,7 +21,7 @@ export default function Card() {
       .then((res) => res.json())
       .then((data) => {
         //console.log(data)
-        setSections(data.slice(0, 2000));
+        setSections(data);
       })
       .catch((err) => console.log(`cannot fetch data ${err}`));
   }, []);
@@ -30,9 +29,7 @@ export default function Card() {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     e.preventDefault();
-    //console.log('hello world');
     const filteredResult = sections.filter(({ category }) => {
-      //console.log(category);
       return category.some((cat) => cat.toLowerCase() === value.toLowerCase());
     });
     setFilter(filteredResult);
@@ -45,7 +42,6 @@ export default function Card() {
         cat.toLowerCase().includes(value.toLowerCase())
       );
     });
-    console.log(filteredResult);
     setFilter(filteredResult);
   };
 
@@ -55,20 +51,16 @@ export default function Card() {
     const filteredResult = sections.sort(function (a, b) {
       var dateA = new Date(a.created),
         dateB = new Date(b.created);
-        if(value.toLowerCase() === "ascending")
-        {
-          return dateA - dateB;
-        }
-        else if(value.toLowerCase() === "descending")
-        {
-          return dateB - dateA;
-        }
-        else{
-          return
-        }
+      if (value.toLowerCase() === 'ascending') {
+        return dateA - dateB;
+      } else if (value.toLowerCase() === 'descending') {
+        return dateB - dateA;
+      } else {
+        return;
+      }
     });
-     console.log(filteredResult);
-     setFilter(filteredResult);
+    console.log(filteredResult);
+    setFilter(filteredResult);
   };
 
   const sortByCategory = (e) => {
@@ -76,64 +68,33 @@ export default function Card() {
     e.preventDefault();
 
     const filteredResult = sections.filter(({ category }) => {
-
-      if(value.toLowerCase() === "ascending")
-      {
-        return category.sort()
-      }
-      else if(value.toLowerCase() === "descending")
-      {
-        return category.reverse()
-      }
-      else{
-        return category
+      if (value.toLowerCase() === 'ascending') {
+        return category.sort();
+      } else if (value.toLowerCase() === 'descending') {
+        return category.reverse();
+      } else {
+        return category;
       }
     });
-    console.log(filteredResult);
     setFilter(filteredResult);
-  }
+  };
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filter.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filterData.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   return (
     <>
-      <div className='input'>
-        <div className='left-input'>
-          <input
-            type='text'
-            placeholder='search template'
-            className='search-temp'
-            onChange={inputChange}
-          />
-        </div>
-        <div className='right-input'>
-          <p>sort by</p>
-          <select onChange={handleOnChange} class='custom-select sel1'>
-            <option value='hello'>All</option>
-            <option value='Education'>Education</option>
-            <option value='E-commerce'>E-commerce</option>
-            <option value='Health'>Health</option>
-          </select>
-          <select class='custom-select sel2' onChange={sortByCategory}>
-            <option value='Default'>Default</option>
-            <option value='Ascending'>Ascending</option>
-            <option value='Descending'>Descending</option>
-          </select>
-          <select class='custom-select sel3' onChange={sortByDate}>
-            <option value='Default'>Default</option>
-            <option value='Ascending'>Ascending</option>
-            <option value='Descending'>Descending</option>
-          </select>
-        </div>
-      </div>
-      <div className="note">
-        <p>Tada! Get started with a free template. Can’t find what you are looking for? Search from the 1000+ available templates</p>
+      <Filter inputChange={inputChange} handleOnChange={handleOnChange} sortByCategory={sortByCategory} sortByDate={sortByDate}/>
+      <div className='note'>
+        <p>
+          Tada! Get started with a free template. Can’t find what you are
+          looking for? Search from the 1000+ available templates
+        </p>
       </div>
       <div className='card'>
-        {currentPosts.map(({ category, description, created }) => (
+        {currentPosts?.map(({ category, description, created }) => (
           <CardItem
             key={created}
             created={created}
@@ -142,7 +103,7 @@ export default function Card() {
           />
         ))}
       </div>
-      <Pagination postsPerPage={postsPerPage} totalPosts={sections.length} paginate={paginate}/>
+      <Pagination postsPerPage={postsPerPage} totalPosts={filterData.length} paginate={paginate}/>
     </>
   );
 }
